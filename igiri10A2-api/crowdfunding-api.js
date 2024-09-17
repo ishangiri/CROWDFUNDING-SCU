@@ -1,7 +1,10 @@
 import express from 'express';
 import connection from './crowdfunding-db.js';
+import cors from "cors";
 
 const app = express();
+
+app.use(cors());
 
 // GET all active fundraisers
 app.get('/api/fundraisers', (req, res) => {
@@ -16,6 +19,7 @@ app.get('/api/fundraisers', (req, res) => {
      res.json(results);
   });
 });
+
 
 
 

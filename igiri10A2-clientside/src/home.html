@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowdfunding Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }
+        header { background: #f4f4f4; padding: 1rem; text-align: center; }
+        nav { margin-bottom: 20px; }
+        nav a { margin-right: 10px; }
+        .fundraiser { border: 1px solid #ddd; margin-bottom: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Crowdfunding Platform</h1>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="search.html">Search Fundraisers</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We are a non-profit organization dedicated to helping people raise funds for various causes.</p>
+        </section>
+
+        <section id="active-fundraisers">
+            <h2>Active Fundraisers</h2>
+            <div id="fundraiser-list"></div>
+        </section>
+    </main>
+
+    <script>
+        fetch('http://localhost:3000/api/fundraisers')
+            .then(response => response.json())
+            .then(fundraisers => {
+                const fundraiserList = document.getElementById('fundraiser-list');
+                fundraisers.forEach(fundraiser => {
+                    const fundraiserElement = document.createElement('div');
+                    fundraiserElement.className = 'fundraiser';
+                    fundraiserElement.innerHTML = `
+                        <h3>${fundraiser.CAPTION}</h3>
+                        <p>Organizer: ${fundraiser.ORGANIZER}</p>
+                        <p>City: ${fundraiser.CITY}</p>
+                        <p>Category: ${fundraiser.CATEGORY_NAME}</p>
+                        <p>Target: $${fundraiser.TARGET_FUNDING}</p>
+                        <p>Current: $${fundraiser.CURRENT_FUNDING}</p>
+                    `;
+                    fundraiserList.appendChild(fundraiserElement);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
