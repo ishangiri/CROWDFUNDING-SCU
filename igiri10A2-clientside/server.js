@@ -17,12 +17,12 @@ app.use(express.static(__dirname));
 
 // Route to serve index.html
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "src/home.html"));
+  res.sendFile(path.join(__dirname, "home.html"));
 });
 
 // Add more routes here
 app.get("/search", (req, res) => {
-  res.sendFile(path.join(__dirname, "src/search.html"));
+  res.sendFile(path.join(__dirname, "search.html"));
 });
 
 app.listen(8080, () => {

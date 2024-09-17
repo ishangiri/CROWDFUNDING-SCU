@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">Crowdfunding</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="search.html">Search</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container mt-5">
+        <h2 class="text-center mb-4">Search Fundraisers</h2>
+        <form id="search-form" class="mb-4">
+            <div class="mb-3">
+                <label for="organizer" class="form-label">Organizer</label>
+                <input type="text" id="organizer" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" id="city" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <input type="text" id="category" class="form-control" />
+            </div>
+            <button type="button" id="search-btn" class="btn btn-primary">Search</button>
+            <button type="button" id="clear-btn" class="btn btn-secondary ms-2">Clear</button>
+        </form>
+        <div id="results"></div>
+    </main>
+
+    <script>
+        document.getElementById('search-btn').addEventListener('click', () => {
+            const organizer = document.getElementById('organizer').value;
+            const city = document.getElementById('city').value;
+            const category = document.getElementById('category').value;
+
+            if (!organizer && !city && !category) {
+                alert('Please select at least one search criterion.');
+                return;
+            }
+
+            const queryString = new URLSearchParams({ organizer, city, category }).toString();
+            fetch(`/api/fundraisers/search?${queryString}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '';
+                    if (data.length === 0) {
+                        resultsDiv.innerHTML = '<p class="text-danger"><strong>No fundraisers found.</strong></p>';
+                    } else {
+                        data.forEach(fundraiser => {
+                            const fundraiserElement = document.createElement('div');
+                            fundraiserElement.innerHTML = `
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${fundraiser.CAPTION}</h5>
+                                        <p><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>
+                                        <p><strong>City:</strong> ${fundraiser.CITY}</p>
+                                        <p><strong>Category:</strong> ${fundraiser.CATEGORY_NAME}</p>
+                                        <p><strong>Target:</strong> $${fundraiser.TARGET_FUNDING}</p>
+                                        <p><strong>Current:</strong> $${fundraiser.CURRENT_FUNDING}</p>
+                                        <a href="/fundraiser?id=${fundraiser.FUNDRAISER_ID}" class="btn btn-primary">View Details</a>
+                                    </div>
+                                </div>
+                            `;
+                            resultsDiv.appendChild(fundraiserElement);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            document.getElementById('organizer').value = '';
+            document.getElementById('city').value = '';
+            document.getElementById('category').value = '';
+        });
+    </script>
+</body>
+
+</html>
