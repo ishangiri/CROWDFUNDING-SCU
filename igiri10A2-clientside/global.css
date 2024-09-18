@@ -1,0 +1,43 @@
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.title{
+    color: rgb(43, 167, 43);
+    font-weight: bold;
+}
+
+.title2{
+    font-weight: bold;
+}
+
+#card{
+    cursor: pointer;
+}
+
+#card:hover{
+    background-color: rgb(38, 189, 38);
+    color: white;
+}
+
+.card-img-left {
+    float: left;
+    height: 150px; /* Adjust as needed */
+    width: 150px; /* Adjust as needed */
+    margin-right: 1rem; /* Space between image and text */
+    object-fit: cover; /* Ensures the image covers the given dimensions */
+}
+
+.card-body {
+    padding: 1.5rem; /* Adjust the padding inside the card body */
+}
+
+.card {
+    overflow: hidden; /* Ensures that floating elements are contained within the card */
+}
+

@@ -25,6 +25,10 @@ app.get("/search", (req, res) => {
   res.sendFile(path.join(__dirname, "search.html"));
 });
 
+app.get("/fundraisers/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "fundraisers.html"));
+});
+
 app.listen(8080, () => {
   console.log("Running on port 8080");
 });
