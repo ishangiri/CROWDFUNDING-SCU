@@ -50,7 +50,7 @@
                 <h5 class="mb-3 ">Contact Information</h5>
                 <ul class="list-unstyled fs-5">
                     <li><strong>Address:</strong> 123 Broadbeach, Gold Coast</li>
-                    <li><strong>Email:</strong> <a href="crowdfunding@gmail.com">crowdfunding@gmail.com</a></li>
+                    <li><strong>Email:</strong> <a href="mailto: crowdfunding@gmail.com">crowdfunding@gmail.com</a></li>
                     <li><strong>Phone:</strong> +61-01-1234567</li>
                 </ul>
             </div>
@@ -66,6 +66,7 @@
     </main>
 
     <script>
+        //fetching all the fundraisers and displaying 
         fetch('http://localhost:3000/api/fundraisers')
             .then(response => response.json())
             .then(fundraisers => {

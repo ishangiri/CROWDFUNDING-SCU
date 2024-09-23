@@ -27,14 +27,14 @@
 
 .card-img-left {
     float: left;
-    height: 150px; /* Adjust as needed */
-    width: 150px; /* Adjust as needed */
-    margin-right: 1rem; /* Space between image and text */
-    object-fit: cover; /* Ensures the image covers the given dimensions */
+    height: 150px;
+    width: 150px; 
+    margin-right: 1rem; 
+    object-fit: cover; 
 }
 
 .card-body {
-    padding: 1.5rem; /* Adjust the padding inside the card body */
+    padding: 1.5rem; 
 }
 
 .card {

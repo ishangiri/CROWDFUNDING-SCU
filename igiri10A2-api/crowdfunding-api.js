@@ -29,6 +29,7 @@ app.get('/api/categories', (req, res) => {
   });
 });
 
+//get the fundraisers on searching criteria
 app.get('/api/fundraisers/search', (req, res) => {
   const { organizer, city, category } = req.query;
   let query = `
@@ -53,6 +54,7 @@ app.get('/api/fundraisers/search', (req, res) => {
   });
 });
 
+//get fundraisers by id
 app.get('/api/fundraisers/:id', (req, res) => {
   const { id } = req.params;
   const query = `
