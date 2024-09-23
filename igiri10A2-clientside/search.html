@@ -52,17 +52,24 @@
     </main>
 
     <script>
+    
+    //on click of the button execute a callback function to search the fundraiser based on the given criteria
         document.getElementById('search-btn').addEventListener('click', () => {
+
+                // set the value of the input field on clicking search button 
             const organizer = document.getElementById('organizer').value;
             const city = document.getElementById('city').value;
             const category = document.getElementById('category').value;
 
+            //check if the users inputs one of the field
             if (!organizer && !city && !category) {
                 alert('Please select at least one search criterion.');
                 return;
             }
 
+            //store the value of the input fields in queryString
             const queryString = new URLSearchParams({ organizer, city, category }).toString();
+            //make api call based on the querystring parameter to fetch the specific data.
             fetch(`http://localhost:3000/api/fundraisers/search?${queryString}`)
     .then(response => {
         return response.json();
@@ -71,6 +78,7 @@
         console.log(data);
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = '';
+        //check if we get the data from the response
         if (data.length === 0) {
             resultsDiv.innerHTML = '<p class="text-danger"><strong>No fundraisers found.</strong></p>';
         } else {
@@ -99,6 +107,7 @@
 
         });
 
+        //clear input fields in when clicking clear button.
         document.getElementById('clear-btn').addEventListener('click', () => {
             document.getElementById('organizer').value = '';
             document.getElementById('city').value = '';
