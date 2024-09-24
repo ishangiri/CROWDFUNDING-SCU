@@ -30,36 +30,50 @@ app.get('/api/categories', (req, res) => {
   });
 });
 
-//get the fundraisers based on the search criteria
+//get fundraisers based on search criteria
 app.get('/api/fundraisers/search', (req, res) => {
   const { organizer, city, category } = req.query;
 
-  // Base query to get all the fundraisers
+  // Base query to get all fundraisers
   let query = `
     SELECT F.*, C.NAME as CATEGORY_NAME 
     FROM FUNDRAISER F 
     JOIN CATEGORY C ON F.CATEGORY_ID = C.CATEGORY_ID
   `;
 
-  // conditions array to add conditions
+  // Array to store query conditions and parameters
   const conditions = [];
+  const params = [];
 
-  // Add conditions with the inputted criteria from user
-  if (organizer) conditions.push(`F.ORGANIZER LIKE ${organizer}`);
-  if (city) conditions.push(`F.CITY LIKE ${city}`);
-  if (category) conditions.push(`C.NAME LIKE ${category}`);
+  //append the conditions and params array based on the query from the user.
+  if (organizer) {
+    conditions.push(`F.ORGANIZER LIKE ?`);
+    params.push(`%${organizer}%`); 
+  }
+  if (city) {
+    conditions.push(`F.CITY LIKE ?`);
+    params.push(`%${city}%`);
+  }
+  if (category) {
+    conditions.push(`F.CATEGORY_ID = ?`);
+    params.push(category);  
+  }
 
   // Append conditions to the query if any exist
   if (conditions.length > 0) {
     query += ` WHERE ` + conditions.join(' AND ');
   }
 
-  // Execute query
-  connection.query(query, (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+  // Execute query with parameters and check for errors if any
+  connection.query(query, params, (err, results) => {
+    if (err) {
+      console.error('SQL Error:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
     res.json(results);
   });
 });
+
 
 
 //get fundraisers by id
