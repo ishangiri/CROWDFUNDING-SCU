@@ -80,9 +80,9 @@ app.get('/api/fundraisers/search', (req, res) => {
 app.get('/api/fundraisers/:id', (req, res) => {
   //get the id from url 
   const { id } = req.params;
-  // get the fundraiser by id where the ? in the F.Fndraiser_ID will be replaced by id
+  // get the fundraiser by id where the ? in the F.Fundraiser_ID will be replaced by id
   const query = `
-    SELECT F.*, C.NAME
+    SELECT F.*, C.NAME as CATEGORY_NAME
     FROM FUNDRAISER F
     JOIN CATEGORY C ON F.CATEGORY_ID = C.CATEGORY_ID
     WHERE F.FUNDRAISER_ID = ?

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fundraiser Details</title>
      <!--bootstrap cdn for css--->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"         
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -36,7 +36,21 @@
         <div id="fundraiser-details"></div>
     </main>
     <script>
-        // Extract the ID from the URL path
+
+//giving images path to specific organizer
+const categoryImages = {
+    'Jessica': '/assets/jessica.jpg',
+    'Steve Smith': '/assets/flood.jpeg',
+    'Andrew Bing': '/assets/bike-accident.avif',
+   'Homeless Shelter': '/assets/homeshelter.jpg',
+   'Local School Burleigh': '/assets/students.jpg',
+   'Homeless Childrens': '/assets/homeless-children.avif',
+
+};
+
+     
+
+        // Extracting the ID from the URL path
         const path = window.location.pathname; // retrieving the pathname in the url
         const id = path.split('/').pop(); // retrieving the id from the url
     
@@ -44,18 +58,20 @@
             fetch(`http://localhost:3000/api/fundraisers/${id}`) // making the api call with the extracted Id 
                 .then(response => response.json())
                 .then(fundraiser => {
-                    const detailsDiv = document.getElementById('fundraiser-details');  
+                    const detailsDiv = document.getElementById('fundraiser-details');
+                    //selecting that image path matching the organizer  
+                    const imageUrl = categoryImages[fundraiser.ORGANIZER];  
                     detailsDiv.innerHTML = `
-                        <div class="card">
+                        <div class="card text-center mb-3 d-flex flex-column justify-content-center align-items-center border-0">
+                             <img src = "${imageUrl}" id = "image" class="card-img-left mb-1" alt="${fundraiser.CAPTION}">
                             <div class="card-body">
-                                <h5 class="card-title">${fundraiser.CAPTION}</h5>
-                                <p><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>
-                                <p><strong>City:</strong> ${fundraiser.CITY}</p>
-                                <p><strong>Category:</strong> ${fundraiser.CATEGORY_NAME}</p>
-                                <p><strong>Target:</strong> $${fundraiser.TARGET_FUNDING}</p>
-                                <p><strong>Current:</strong> $${fundraiser.CURRENT_FUNDING}</p>
-                                <p><strong>Status:</strong> ${fundraiser.ACTIVE ? 'Active' : 'Inactive'}</p>
-                                <button class="btn btn-primary" onclick="alert('This feature is under construction')">Donate</button>
+                                <p class = "fs-2 fw-thin"><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>
+                                <p class = "fs-2 fw-thin"><strong>City:</strong> ${fundraiser.CITY}</p>
+                                <p class = "fs-2 fw-bold"><strong>Category:</strong> ${fundraiser.CATEGORY_NAME}</p>
+                                <p class = " fs-2 fw-bold fst-italic text-success"><strong>Target:</strong> $${fundraiser.TARGET_FUNDING}</p>
+                                <p class = "fs-2 fw-bold fst-italic text-danger"><strong>Current:</strong> $${fundraiser.CURRENT_FUNDING}</p>
+                                <p class = "fs-2 fw-bold "><strong>Status:</strong> ${fundraiser.ACTIVE ? 'Active' : 'Inactive'}</p>
+                                <button class="btn btn-primary fs-3" onclick="alert('This feature is under construction')">Donate</button>
                             </div>
                         </div>
                     `;

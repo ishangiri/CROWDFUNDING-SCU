@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crowdfunding Home</title>
+    <!--Bootstrap CDN-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link href="global.css" rel="stylesheet" />
@@ -35,7 +38,7 @@
 
     <main class="container mt-5">
         <!-- About Us Section -->
-        <section class="about mb-5 p-4 bg-light rounded shadow">
+        <section class="about mt-5 mb-5 p-4 bg-light rounded shadow">
             <h2 class="text-center mb-4 title">About Us</h2>
             <p id="paragraph" class="text-center fs-5">
                 Welcome to <strong>CrowdFunding</strong>, where we believe in the power of community to create positive change. Together, we can bring hope and support to those in need, powered by the generosity and kindness of people like you.
@@ -63,19 +66,38 @@
                 <!-- Fundraisers will be injected here -->
             </div>
         </section>
+
+      
     </main>
 
     <script>
+
+//giving images path to specific organizer
+const categoryImages = {
+    'Jessica': './assets/jessica.jpg',
+    'Steve Smith': './assets/flood.jpeg',
+    'Andrew Bing': './assets/bike-accident.avif',
+   'Homeless Shelter': './assets/homeshelter.jpg',
+   'Local School Burleigh': './assets/students.jpg',
+   'Homeless Childrens': './assets/homeless-children.avif'
+
+};
+
+
+
         //making the api call to fetch all the fundraisers that are active
         fetch('http://localhost:3000/api/fundraisers')
             .then(response => response.json())
             .then(fundraisers => {
                 const fundraiserList = document.getElementById('fundraiser-list');
                 fundraisers.forEach(fundraiser => {
+                     //selecting that image path matching the organizer  
+                    const imageUrl = categoryImages[fundraiser.ORGANIZER];
                     const fundraiserElement = document.createElement('div');
                     fundraiserElement.className = 'col';
                     fundraiserElement.innerHTML = `
-                        <div id="card" class="card h-100">
+                        <div id="card" class="card h-80">
+                             <img src = "${imageUrl}" class="card-img-top" alt="${fundraiser.CAPTION}">
                             <div class="card-body">
                                 <h3 class="card-title title2">${fundraiser.CAPTION}</h3>
                                 <p class="card-text para"><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>

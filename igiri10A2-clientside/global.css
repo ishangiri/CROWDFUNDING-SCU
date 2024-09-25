@@ -38,6 +38,10 @@
 }
 
 .card {
-    overflow: hidden; /* Ensures that floating elements are contained within the card */
+    overflow: hidden; 
 }
 
+#image{
+    height: 500px;
+    width: 500px;
+}
