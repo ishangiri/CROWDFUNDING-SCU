@@ -15,16 +15,16 @@ app.use(bodyParser.json());
 // Serve static files
 app.use(express.static(__dirname));
 
-// Route to serve index.html
+// Route to serve home.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "home.html"));
 });
 
-// Add more routes here
+//Route to server search.html
 app.get("/search", (req, res) => {
   res.sendFile(path.join(__dirname, "search.html"));
 });
-
+//Route to server fundraisers.html
 app.get("/fundraisers/:id", (req, res) => {
   res.sendFile(path.join(__dirname, "fundraisers.html"));
 });
