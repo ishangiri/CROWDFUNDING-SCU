@@ -1,47 +1,46 @@
-
 #buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
-.title{
-    color: rgb(43, 167, 43);
-    font-weight: bold;
+.title {
+  color: rgb(43, 167, 43);
+  font-weight: bold;
 }
 
-.title2{
-    font-weight: bold;
+.title2 {
+  font-weight: bold;
 }
 
-#card{
-    cursor: pointer;
+#card {
+  cursor: pointer;
 }
 
-#card:hover{
-    background-color: rgb(38, 189, 38);
-    color: white;
+#card:hover {
+  background-color: rgb(38, 189, 38);
+  color: white;
 }
 
 .card-img-left {
-    float: left;
-    height: 150px;
-    width: 150px; 
-    margin-right: 1rem; 
-    object-fit: cover; 
+  float: left;
+  height: 150px;
+  width: 150px;
+  margin-right: 1rem;
+  object-fit: cover;
 }
 
 .card-body {
-    padding: 1.5rem; 
+  padding: 1.5rem;
 }
 
 .card {
-    overflow: hidden; 
+  overflow: hidden;
 }
 
-#image{
-    height: 500px;
-    width: 500px;
+#image {
+  height: 500px;
+  width: 500px;
 }
