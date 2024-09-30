@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   // Fetch fundraisers from the API
   getFundraisers() {
-    this.http.get<any[]>('/api/fundraisers').subscribe(
+    this.http.get<any[]>('http://localhost:3000/api/fundraisers/').subscribe(
       (data) => (this.fundraisers = data),
       (error) => console.error('Error fetching fundraisers', error)
     );

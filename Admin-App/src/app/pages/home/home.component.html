@@ -3,30 +3,42 @@
 
   <!-- Fundraiser List -->
   <div class="mb-4">
-    <h2 class="text-xl">Existing Fundraisers</h2>
-    <ul>
-      <li
-        *ngFor="let fundraiser of fundraisers"
-        class="flex justify-between items-center border-b py-2"
-      >
-        <span>{{ fundraiser.title }} ({{ fundraiser.category_name }})</span>
-        <div>
-          <button
-            (click)="editFundraiser(fundraiser)"
-            class="text-blue-600 hover:text-blue-800"
-          >
-            Edit
-          </button>
-          <button
-            (click)="deleteFundraiser(fundraiser.id)"
-            class="text-red-600 hover:text-red-800 ml-2"
-          >
-            Delete
-          </button>
-        </div>
-      </li>
-    </ul>
+    <!-- Table for displaying organizer and caption -->
+    <h2 class="text-xl mb-2">Fundraiser Details</h2>
+    <table class="min-w-full border">
+      <thead>
+        <tr class="border-b">
+          <th class="px-4 py-2 text-left">Organizer</th>
+          <th class="px-4 py-2 text-left">Caption</th>
+          <th class="px-4 py-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let fundraiser of fundraisers"
+          class="border-b"
+        >
+          <td class="px-4 py-2">{{ fundraiser.ORGANIZER }}</td>
+          <td class="px-4 py-2">{{ fundraiser.CAPTION }}</td>
+          <td class="px-4 py-2">
+            <button
+              (click)="editFundraiser(fundraiser)"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              Edit
+            </button>
+            <button
+              (click)="deleteFundraiser(fundraiser.id)"
+              class="text-red-600 hover:text-red-800 ml-2"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  
 
   <!-- New Fundraiser Form -->
   <h2 class="text-xl mb-2">Add New Fundraiser</h2>
