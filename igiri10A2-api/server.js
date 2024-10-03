@@ -1,16 +1,16 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const app = express();
 
 
-var express = require('express');
+  app.use(cors());
 
-var bodyParser = require('body-parser');
+  
 
-var app = express();
-var cors = require('cors');
-
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
-var API = require("./controllerAPI/api_controller");
+const API = require("./controllerAPI/api_controller");
 app.use("/", API);
-app.listen(3080);
+app.listen(3000);
 console.log("Server up and running on port 3080");

@@ -9,18 +9,20 @@ var router = express.Router();
 
 // GET all active fundraisers
 router.get('/api/fundraisers', (req, res) => {
-    //select all fundraisers where Active is true
-    const query = `
-      SELECT F.*, C.NAME as CATEGORY_NAME 
-      FROM FUNDRAISER F 
-      JOIN CATEGORY C ON F.CATEGORY_ID = C.CATEGORY_ID 
-      WHERE F.ACTIVE = TRUE
-    `;
-    connection.query(query, (error, results) => {
-      if (error) throw error;
-       res.json(results);
-    });
+  const query = `
+    SELECT F.*, C.NAME as CATEGORY_NAME 
+    FROM FUNDRAISER F 
+    JOIN CATEGORY C ON F.CATEGORY_ID = C.CATEGORY_ID 
+    WHERE F.ACTIVE = TRUE
+  `;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Database error:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results);
   });
+});
   
   //Get all categories
   router.get('/api/categories', (req, res) => {

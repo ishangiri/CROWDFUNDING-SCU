@@ -7,8 +7,7 @@
 }
 
 .title {
-  color: rgb(43, 167, 43);
-  font-weight: bold;
+  color: white;
 }
 
 .title2 {
@@ -43,4 +42,44 @@
 #image {
   height: 500px;
   width: 500px;
+}
+
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1; /* Allow the main to grow and fill available space */
+}
+footer {
+  background-color: #c8dace; /* Optional background color */
+  text-align: center;
+}
+
+.fundraiser-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.fundraiser-card:hover {
+  transform: translateY(-5px);
+}
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+.progress {
+  height: 10px;
+}
+.btn-donate {
+  transition: background-color 0.3s ease;
+}
+.btn-donate:hover {
+  background-color: #0056b3;
 }
