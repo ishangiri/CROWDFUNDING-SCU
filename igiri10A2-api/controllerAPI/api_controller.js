@@ -164,20 +164,72 @@ router.get('/api/fundraisers', (req, res) => {
   
   
   
-  //Donate Fundraiser
-  router.post('/api/fundraisers/donate/:id', (req, res) => {
-    const { id } = req.params;
-    const { giver, amount } = req.body;
-    const query = `
-      INSERT INTO DONATION (GIVER, FUNDRAISER_ID, AMOUNT) 
-      VALUES (?, ?, ?)
-    `;
+  // //Donate Fundraiser
+  // router.post('/api/fundraisers/donate/:id', (req, res) => {
+  //   const { id } = req.params;
+  //   const { giver, amount } = req.body;
+  //   const query = `
+  //     INSERT INTO DONATION (GIVER, FUNDRAISER_ID, AMOUNT) 
+  //     VALUES (?, ?, ?)
+  //   `;
   
-    connection.query(query, [giver, id, amount], (err, results) => {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ message: 'Donation successful' });
+  //   connection.query(query, [giver, id, amount], (err, results) => {
+  //     if (err) return res.status(500).json({ error: err.message });
+  //     res.json({ message: 'Donation successful' });
+  //   });
+  // });
+
+  // Donate to Fundraiser and update CURRENT_FUNDING
+router.post('/api/fundraisers/donate/:id', (req, res) => {
+  const { id } = req.params;
+  const { giver, amount } = req.body;
+
+  // Insert donation query
+  const insertDonationQuery = `
+    INSERT INTO DONATION (GIVER, FUNDRAISER_ID, AMOUNT) 
+    VALUES (?, ?, ?)
+  `;
+
+  // Update CURRENT_FUNDING query
+  const updateFundraiserQuery = `
+    UPDATE FUNDRAISER 
+    SET CURRENT_FUNDING = CURRENT_FUNDING + ? 
+    WHERE FUNDRAISER_ID = ?
+  `;
+
+  connection.beginTransaction((err) => {
+    if (err) return res.status(500).json({ error: 'Transaction failed' });
+
+    // Step 1: Insert donation
+    connection.query(insertDonationQuery, [giver, id, amount], (err, results) => {
+      if (err) {
+        return connection.rollback(() => {
+          res.status(500).json({ error: err.message });
+        });
+      }
+
+      // Step 2: Update CURRENT_FUNDING for the fundraiser
+      connection.query(updateFundraiserQuery, [amount, id], (err, results) => {
+        if (err) {
+          return connection.rollback(() => {
+            res.status(500).json({ error: err.message });
+          });
+        }
+
+        // Commit the transaction if both queries succeeded
+        connection.commit((err) => {
+          if (err) {
+            return connection.rollback(() => {
+              res.status(500).json({ error: 'Transaction commit failed' });
+            });
+          }
+          res.json({ message: 'Donation successful and fundraiser updated' });
+        });
+      });
     });
   });
+});
+
   
   
   //Post Fundraiser
@@ -208,3 +260,20 @@ router.get('/api/fundraisers', (req, res) => {
   })
 
   module.exports = router;
+
+
+  //get the donations of one particular fundraiser
+
+  router.get('/api/donations/:id', (req, res) => {
+    const { id } = req.params; 
+    const query = `
+        SELECT * FROM DONATION WHERE FUNDRAISER_ID = ?
+    `;
+    connection.query(query, [id], (err,results) => {
+      if(err) {
+        return res.status(500).json({error: err.message})
+      } else {
+        res.json(results)
+      }
+    })
+  })

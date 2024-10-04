@@ -19,7 +19,7 @@
 }
 
 #card:hover {
-  background-color: rgb(38, 189, 38);
+  background-color:  rgb(20, 129, 95);
   color: white;
 }
 
@@ -82,4 +82,21 @@ footer {
 }
 .btn-donate:hover {
   background-color: #0056b3;
+}
+
+.fundraiser-container {
+  display: flex;
+  justify-content: space-between;
+}
+.fundraiser-card {
+  flex: 0 0 40%; /* Adjust the width of the fundraiser card */
+}
+.donation-list {
+  flex: 0 0 55%; 
+  max-height: 400px; 
+  overflow-y: auto; 
+  margin-left: 20px; 
+}
+.donation-list h2 {
+  margin-top: 0;
 }

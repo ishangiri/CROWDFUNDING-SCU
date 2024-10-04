@@ -4,27 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fundraiser Details</title>
-     <!--bootstrap cdn for css--->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"         
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link href="global.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous" />
+    <link href="global.css" rel="stylesheet" />
+    <style>
+        .fundraiser-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .fundraiser-card {
+            flex: 0 0 40%; 
+        }
+        .donation-list {
+            flex: 0 0 55%; 
+            max-height: 600px; 
+            overflow-y: auto; 
+            margin-left: 20px; 
+        }
+        .donation-list h2 {
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(20, 129, 95);">
             <div class="container">
-                <a  class="navbar-brand title" href="#">Crowdfunding</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand title" href="#">Crowdfunding</a>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link title"  aria-current="page" href="/">Home</a>
+                            <a style="color: rgb(255, 255, 255); font-weight: bold;" class="nav-link title" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link title" href="/search">Search</a>
+                            <a style="color: rgb(255, 255, 255); " class="nav-link title" href="/about">About Us</a>
                         </li>
                     </ul>
                 </div>
@@ -33,58 +57,88 @@
     </header>
 
     <main class="container mt-5">
-        <div id="fundraiser-details"></div>
+        <div class="fundraiser-container">
+            <div id="fundraiser-details" class="fundraiser-card"></div>
+            <div class="donation-list">
+                <h2>Top Donations</h2>
+                <div id="donation-list"></div>
+                <a href="#" id="see-more" class="text-primary">See More</a>
+            </div>
+        </div>
     </main>
+
     <script>
+        const categoryImages = {
+            'Jessica': '/assets/jessica.jpg',
+            'Steve Smith': '/assets/flood.jpeg',
+            'Andrew Bing': '/assets/bike-accident.avif',
+            'Homeless Shelter': '/assets/homeshelter.jpg',
+            'Local School Burleigh': '/assets/students.jpg',
+            'Homeless Childrens': '/assets/homeless-children.avif',
+        };
 
-//giving images path to specific organizer
-const categoryImages = {
-    'Jessica': '/assets/jessica.jpg',
-    'Steve Smith': '/assets/flood.jpeg',
-    'Andrew Bing': '/assets/bike-accident.avif',
-   'Homeless Shelter': '/assets/homeshelter.jpg',
-   'Local School Burleigh': '/assets/students.jpg',
-   'Homeless Childrens': '/assets/homeless-children.avif',
+        const path = window.location.pathname;
+        const id = path.split('/').pop();
 
-};
-
-     
-
-        // Extracting the ID from the URL path
-        const path = window.location.pathname; // retrieving the pathname in the url
-        const id = path.split('/').pop(); // retrieving the id from the url
-    
         if (id) {
-            fetch(`http://localhost:3000/api/fundraisers/${id}`) // making the api call with the extracted Id 
+            fetch(`http://localhost:3000/api/fundraisers/${id}`)
                 .then(response => response.json())
                 .then(fundraiser => {
                     const detailsDiv = document.getElementById('fundraiser-details');
-                    //selecting that image path matching the organizer  
-                    const imageUrl = categoryImages[fundraiser.ORGANIZER];  
+                    const imageUrl = categoryImages[fundraiser.ORGANIZER];
                     detailsDiv.innerHTML = `
-                     <div class="container">
-        <div class="fundraiser-card card border-0">
-                   <img src="${imageUrl}" class="card-img-top" alt="${fundraiser.CAPTION}" style="max-height: 400px; object-fit: contain;">
-            <div class="card-body p-4">
-                <h5 class="card-title mb-3 fw-bold">${fundraiser.CAPTION}</h5>
-                <p class="card-text mb-2"><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>
-                <p class="card-text mb-2"><strong>City:</strong> ${fundraiser.CITY}</p>
-                <p class="card-text mb-3"><strong>Category:</strong> ${fundraiser.CATEGORY_NAME}</p>
-                <div class="progress mb-3">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: ${(fundraiser.CURRENT_FUNDING / fundraiser.TARGET_FUNDING) * 100}%" aria-valuenow="${fundraiser.CURRENT_FUNDING}" aria-valuemin="0" aria-valuemax="${fundraiser.TARGET_FUNDING}"></div>
-                </div>
-                <div class="d-flex justify-content-between mb-3">
-                    <p class="mb-0"><strong>Current:</strong> $${fundraiser.CURRENT_FUNDING}</p>
-                    <p class="mb-0"><strong>Target:</strong> $${fundraiser.TARGET_FUNDING}</p>
-                </div>
-                <p class="card-text mb-4"><strong>Status:</strong> <span class="badge ${fundraiser.ACTIVE ? 'bg-success' : 'bg-secondary'}">${fundraiser.ACTIVE ? 'Active' : 'Inactive'}</span></p>
-                <div class="d-flex justify-content-center">
-                <button class="btn btn-success btn-lg  btn-donate" onclick="alert('This feature is under construction')">Donate Now</button>
-            </div>
-            </div>
-        </div>
-    </div>
+                        <div class="container">
+                            <div class="fundraiser-card card border-0">
+                                <img src="${imageUrl}" class="card-img-top" alt="${fundraiser.CAPTION}" style="max-height: 300px; object-fit: contain;">
+                                <div class="card-body p-4">
+                                    <h5 class="card-title mb-3 fw-bold">${fundraiser.CAPTION}</h5>
+                                    <p class="card-text mb-2"><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>
+                                    <p class="card-text mb-2"><strong>City:</strong> ${fundraiser.CITY}</p>
+                                    <p class="card-text mb-3"><strong>Category:</strong> ${fundraiser.CATEGORY_NAME}</p>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: ${(fundraiser.CURRENT_FUNDING / fundraiser.TARGET_FUNDING) * 100}%" aria-valuenow="${fundraiser.CURRENT_FUNDING}" aria-valuemin="0" aria-valuemax="${fundraiser.TARGET_FUNDING}"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <p class="mb-0"><strong>Current:</strong> $${fundraiser.CURRENT_FUNDING}</p>
+                                        <p class="mb-0"><strong>Target:</strong> $${fundraiser.TARGET_FUNDING}</p>
+                                    </div>
+                                    <p class="card-text mb-4"><strong>Status:</strong> <span class="badge ${fundraiser.ACTIVE ? 'bg-success' : 'bg-secondary'}">${fundraiser.ACTIVE ? 'Active' : 'Inactive'}</span></p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="/donation?id=${id}" class="btn btn-success btn-lg">Donate Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     `;
+
+                    // Fetch donations for this fundraiser
+                    fetch(`http://localhost:3000/api/donations/${id}`)
+                        .then(response => response.json())
+                        .then(donations => {
+                            const donationListDiv = document.getElementById('donation-list');
+                            donationListDiv.innerHTML = donations.slice(0, 5).map(donation => `
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                        <p><strong>Giver:</strong> ${donation.GIVER}</p>
+                                        <p><strong>Amount:</strong> $${donation.AMOUNT}</p>
+                                    </div>
+                                </div>
+                            `).join('');
+
+                            // Handle "See More" link
+                            document.getElementById('see-more').addEventListener('click', function(event) {
+                                event.preventDefault();
+                                donationListDiv.innerHTML = donations.map(donation => `
+                                    <div class="card mb-2">
+                                        <div class="card-body">
+                                            <p><strong>Giver:</strong> ${donation.GIVER}</p>
+                                            <p><strong>Amount:</strong> $${donation.AMOUNT}</p>
+                                        </div>
+                                    </div>
+                                `).join('');
+                                this.style.display = 'none'; // Hide the "See More" link
+                            });
+                        });
                 })
                 .catch(error => console.error('Error:', error));
         } else {
