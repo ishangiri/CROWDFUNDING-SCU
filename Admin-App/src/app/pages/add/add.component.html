@@ -1,1 +1,229 @@
-<p>add works!</p>
+<div class="container mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Fundraisers</h1>
+
+  <!-- Success and Error Messages -->
+  <div
+    *ngIf="errorMessage"
+    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6"
+    role="alert"
+  >
+    <strong class="font-bold">Error!</strong>
+    <span class="block sm:inline">{{ errorMessage }}</span>
+  </div>
+
+  <div
+    *ngIf="successMessage"
+    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6"
+    role="alert"
+  >
+    <strong class="font-bold">Success!</strong>
+    <span class="block sm:inline">{{ successMessage }}</span>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="text-center mb-6">
+    <span class="loader"></span>
+    <span class="text-gray-700 font-semibold">Loading...</span>
+  </div>
+
+  <!-- New Fundraiser Form -->
+  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+      Add New Fundraiser
+    </h2>
+    <form (ngSubmit)="addFundraiser()" class="space-y-4">
+      <input
+        type="text"
+        [(ngModel)]="newFundraiser.title"
+        name="title"
+        placeholder="Title"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="text"
+        [(ngModel)]="newFundraiser.organizer"
+        name="organizer"
+        placeholder="Organizer"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="text"
+        [(ngModel)]="newFundraiser.caption"
+        name="caption"
+        placeholder="Caption"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="number"
+        [(ngModel)]="newFundraiser.target_funding"
+        name="target_funding"
+        placeholder="Target Funding"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="text"
+        [(ngModel)]="newFundraiser.city"
+        name="city"
+        placeholder="City"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <!-- Category Dropdown -->
+      <select
+        [(ngModel)]="newFundraiser.category_id"
+        name="category_id"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      >
+        <option
+          *ngFor="let category of categories"
+          [value]="category.CATEGORY_ID"
+        >
+          {{ category.NAME }}
+        </option>
+      </select>
+      <button
+        type="submit"
+        class="w-full bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-300"
+      >
+        Save Fundraiser
+      </button>
+    </form>
+  </div>
+
+  <!-- Update Fundraiser Form -->
+  <div *ngIf="editingFundraiser" class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Update Fundraiser</h2>
+    <form (ngSubmit)="updateFundraiser()" class="space-y-4">
+      <input
+        type="text"
+        [(ngModel)]="editingFundraiser.title"
+        name="title"
+        placeholder="Title"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="text"
+        [(ngModel)]="editingFundraiser.organizer"
+        name="organizer"
+        placeholder="Organizer"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="text"
+        [(ngModel)]="editingFundraiser.caption"
+        name="caption"
+        placeholder="Caption"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="number"
+        [(ngModel)]="editingFundraiser.target_funding"
+        name="target_funding"
+        placeholder="Target Funding"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <input
+        type="text"
+        [(ngModel)]="editingFundraiser.city"
+        name="city"
+        placeholder="City"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      />
+      <!-- Category Dropdown -->
+      <select
+        [(ngModel)]="editingFundraiser.category_id"
+        name="category_id"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+      >
+        <option
+          *ngFor="let category of categories"
+          [value]="category.CATEGORY_ID"
+        >
+          {{ category.NAME }}
+        </option>
+      </select>
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-300"
+      >
+        Update Fundraiser
+      </button>
+    </form>
+  </div>
+
+  <!-- Fundraiser List -->
+  <div class="mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+      Fundraiser Details
+    </h2>
+    <table class="min-w-full bg-white border rounded-lg shadow-md">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-6 text-left">Organizer</th>
+          <th class="py-3 px-6 text-left">Caption</th>
+          <th class="py-3 px-6 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let fundraiser of fundraisers"
+          class="border-b bg-white hover:bg-gray-100"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ fundraiser.ORGANIZER }}
+          </td>
+          <td class="py-3 px-6 text-left">{{ fundraiser.CAPTION }}</td>
+          <td class="py-3 px-6 text-left">
+            <button
+              (click)="editFundraiser(fundraiser)"
+              class="text-blue-600 hover:text-blue-800 font-semibold"
+            >
+              Edit
+            </button>
+            <button
+              (click)="deleteFundraiser(fundraiser.id)"
+              class="text-red-600 hover:text-red-800 font-semibold ml-4"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Donations List for a Fundraiser -->
+  <div *ngIf="editingFundraiser" class="mt-8">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Donations</h3>
+    <table class="min-w-full bg-white border rounded-lg shadow-md">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-6 text-left">Giver</th>
+          <th class="py-3 px-6 text-left">Amount</th>
+          <th class="py-3 px-6 text-left">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let donation of donations"
+          class="border-b bg-white hover:bg-gray-100"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ donation.GIVER }}
+          </td>
+          <td class="py-3 px-6 text-left">{{ donation.AMOUNT }}</td>
+          <td class="py-3 px-6 text-left">{{ donation.DATE }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
