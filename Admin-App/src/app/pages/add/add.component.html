@@ -34,14 +34,6 @@
     <form (ngSubmit)="addFundraiser()" class="space-y-4">
       <input
         type="text"
-        [(ngModel)]="newFundraiser.title"
-        name="title"
-        placeholder="Title"
-        required
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
-      />
-      <input
-        type="text"
         [(ngModel)]="newFundraiser.organizer"
         name="organizer"
         placeholder="Organizer"
@@ -64,6 +56,18 @@
         required
         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
       />
+    <select
+    name="active"
+    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200"
+  >
+    <option>
+      True
+    </option>
+    <option>
+      False
+    </option>
+  </select>
+ 
       <input
         type="text"
         [(ngModel)]="newFundraiser.city"

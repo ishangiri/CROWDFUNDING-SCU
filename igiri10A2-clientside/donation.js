@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Fundraiser ID:', fundraiserId);
 
     // Fetch fundraiser details
-    fetch(`http://localhost:3000/api/fundraisers/${fundraiserId}`)
+    fetch(`http://23975071.it.scu.edu.au/DataServ/api/fundraisers/${fundraiserId}`)
         .then(response => response.json())
         .then(fundraiser => {
             document.getElementById('fundraiser-title').textContent = `Donate to: ${fundraiser.ORGANIZER || 'Unnamed Fundraiser'}`;
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const giver = document.getElementById('giver').value;
         const amount = document.getElementById('amount').value;
 
-        fetch(`http://localhost:3000/api/fundraisers/donate/${fundraiserId}`, {
+        fetch(`http://23975071.it.scu.edu.au/DataServ/api/fundraisers/donate/${fundraiserId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

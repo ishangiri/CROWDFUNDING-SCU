@@ -6,6 +6,23 @@ var express = require('express');
 
 var router = express.Router();
 
+//GEt all fundrasiers
+router.get('/api/all/fundraisers', (req, res) => {
+  const query = `
+    SELECT F.*, C.NAME as CATEGORY_NAME 
+    FROM FUNDRAISER F 
+    JOIN CATEGORY C ON F.CATEGORY_ID = C.CATEGORY_ID 
+  `;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Database error:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.json(results);
+    }
+   
+  });
+});
 
 // GET all active fundraisers
 router.get('/api/fundraisers', (req, res) => {
@@ -19,8 +36,10 @@ router.get('/api/fundraisers', (req, res) => {
     if (error) {
       console.error('Database error:', error);
       return res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.json(results);
     }
-    res.json(results);
+   
   });
 });
   

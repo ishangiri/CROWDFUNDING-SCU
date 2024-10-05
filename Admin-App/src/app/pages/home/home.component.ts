@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   // Fetch fundraisers from the API
   getFundraisers() {
-    this.http.get<any[]>('http://localhost:3000/api/fundraisers/').subscribe(
+    this.http.get<any[]>('http://23975071.it.scu.edu.au/DataServ/api/all/fundraisers').subscribe(
       (data) => (this.fundraisers = data),
       (error) => console.error('Error fetching fundraisers', error)
     );
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   // Add a new fundraiser
   addFundraiser() {
-    this.http.post('/api/fundraisers', this.newFundraiser).subscribe(
+    this.http.post('http://23975071.it.scu.edu.au/DataServ/api/fundraisers', this.newFundraiser).subscribe(
       () => {
         this.getFundraisers(); // Refresh the list
         this.newFundraiser = { title: '', category_id: '' }; // Reset the form
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
 
   // Delete a fundraiser
   deleteFundraiser(id: number) {
-    this.http.delete(`/api/fundraisers/${id}`).subscribe(
+    this.http.delete(`http://23975071.it.scu.edu.au/DataServ/api/fundraisers/${id}`).subscribe(
       () => this.getFundraisers(), // Refresh the list
       (error) => console.error('Error deleting fundraiser', error)
     );

@@ -15,12 +15,13 @@ export class AddComponent implements OnInit {
   categories: any[] = []; // Array to store categories
   donations: any[] = []; // Array to store donations
   newFundraiser = {
-    title: '',
-    organizer: '',
-    caption: '',
-    target_funding: null,
-    city: '',
-    category_id: '',
+    organizer : "",
+     caption : "",
+    target_funding : null,
+     city : "",
+     category_id : null,
+     active : false 
+
   }; // Object for new fundraiser input
   editingFundraiser: any; // Variable to hold the fundraiser being edited
   isLoading: boolean = false; // To track the loading state
@@ -37,7 +38,7 @@ export class AddComponent implements OnInit {
   // Fetch fundraisers from the API
   getFundraisers() {
     this.isLoading = true;
-    this.http.get<any[]>('/api/fundraisers').subscribe(
+    this.http.get<any[]>('http://23975071.it.scu.edu.au/DataServ/api/all/fundraisers').subscribe(
       (data) => {
         this.fundraisers = data;
         this.isLoading = false;
@@ -52,7 +53,7 @@ export class AddComponent implements OnInit {
 
   // Fetch categories from the API
   getCategories() {
-    this.http.get<any[]>('/api/categories').subscribe(
+    this.http.get<any[]>('http://23975071.it.scu.edu.au/DataServ/api/categories').subscribe(
       (data) => {
         this.categories = data;
       },
@@ -65,22 +66,22 @@ export class AddComponent implements OnInit {
 
   // Add a new fundraiser
   addFundraiser() {
-    if (!this.newFundraiser.title || !this.newFundraiser.category_id) {
+    if (!this.newFundraiser.organizer || !this.newFundraiser.category_id || !this.newFundraiser.caption || !this.newFundraiser.city || !this.newFundraiser.target_funding ) {
       this.errorMessage = 'Please fill out all required fields!';
       return;
     }
 
     this.isLoading = true;
-    this.http.post('/api/fundraisers', this.newFundraiser).subscribe(
+    this.http.post('http://23975071.it.scu.edu.au/DataServ/api/fundraisers', this.newFundraiser).subscribe(
       () => {
         this.getFundraisers();
         this.newFundraiser = {
-          title: '',
-          organizer: '',
-          caption: '',
-          target_funding: null,
-          city: '',
-          category_id: '',
+          organizer : "",
+          caption : "",
+         target_funding : null,
+          city : "",
+          category_id : null,
+          active : false 
         }; // Reset the form
         this.successMessage = 'Fundraiser added successfully!';
         this.errorMessage = '';
@@ -112,7 +113,7 @@ export class AddComponent implements OnInit {
     this.isLoading = true;
     this.http
       .put(
-        `/api/fundraisers/${this.editingFundraiser.id}`,
+        `http://23975071.it.scu.edu.au/DataServ/api/fundraisers/${this.editingFundraiser.id}`,
         this.editingFundraiser
       )
       .subscribe(
@@ -135,7 +136,7 @@ export class AddComponent implements OnInit {
   deleteFundraiser(id: number) {
     if (confirm('Are you sure you want to delete this fundraiser?')) {
       this.isLoading = true;
-      this.http.delete(`/api/fundraisers/${id}`).subscribe(
+      this.http.delete(`http://23975071.it.scu.edu.au/DataServ/api/fundraisers/${id}`).subscribe(
         () => {
           this.getFundraisers();
           this.successMessage = 'Fundraiser deleted successfully!';
@@ -153,7 +154,7 @@ export class AddComponent implements OnInit {
 
   // Fetch donations for the selected fundraiser
   getDonations(fundraiserId: number) {
-    this.http.get<any[]>(`/api/donations/${fundraiserId}`).subscribe(
+    this.http.get<any[]>(`http://23975071.it.scu.edu.au/DataServ/api/donations/${fundraiserId}`).subscribe(
       (data) => {
         this.donations = data;
       },

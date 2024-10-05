@@ -68,24 +68,25 @@
     </main>
 
     <script>
+
         const categoryImages = {
-            'Jessica': '/assets/jessica.jpg',
-            'Steve Smith': '/assets/flood.jpeg',
-            'Andrew Bing': '/assets/bike-accident.avif',
-            'Homeless Shelter': '/assets/homeshelter.jpg',
-            'Local School Burleigh': '/assets/students.jpg',
-            'Homeless Childrens': '/assets/homeless-children.avif',
+            1: '/assets/jessica.jpg',
+            2: '/assets/flood.jpeg',
+            3: '/assets/bike-accident.avif',
+            4: '/assets/homeshelter.jpg',
+            5: '/assets/students.jpg',
+            6: '/assets/homeless-children.avif',
         };
 
         const path = window.location.pathname;
         const id = path.split('/').pop();
 
         if (id) {
-            fetch(`http://localhost:3000/api/fundraisers/${id}`)
+            fetch(`http://23975071.it.scu.edu.au/DataServ/api/fundraisers/${id}`)
                 .then(response => response.json())
                 .then(fundraiser => {
                     const detailsDiv = document.getElementById('fundraiser-details');
-                    const imageUrl = categoryImages[fundraiser.ORGANIZER];
+                    const imageUrl = categoryImages[fundraiser.CATEGORY_ID];
                     detailsDiv.innerHTML = `
                         <div class="container">
                             <div class="fundraiser-card card border-0">
@@ -112,18 +113,32 @@
                     `;
 
                     // Fetch donations for this fundraiser
-                    fetch(`http://localhost:3000/api/donations/${id}`)
+                    fetch(`http://23975071.it.scu.edu.au/DataServ/api/donations/${id}`)
                         .then(response => response.json())
                         .then(donations => {
                             const donationListDiv = document.getElementById('donation-list');
-                            donationListDiv.innerHTML = donations.slice(0, 5).map(donation => `
+                            donationListDiv.innerHTML = donations.slice(0, 5).map(donation =>
+
+                           { 
+                            const date = new Date(donation.DATE);
+            console.log('Parsed Date:', date); // Log the parsed date object
+            
+            const isValidDate = !isNaN(date.getTime()); // Check if the date is valid
+            const formattedDate = isValidDate ? date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }) : 'Invalid date';
+                            
+                          return  `
                                 <div class="card mb-2">
                                     <div class="card-body">
                                         <p><strong>Giver:</strong> ${donation.GIVER}</p>
                                         <p><strong>Amount:</strong> $${donation.AMOUNT}</p>
+                                        <p><strong>Date:</strong> ${formattedDate}</p>
                                     </div>
                                 </div>
-                            `).join('');
+                            `}).join('');
 
                             // Handle "See More" link
                             document.getElementById('see-more').addEventListener('click', function(event) {
