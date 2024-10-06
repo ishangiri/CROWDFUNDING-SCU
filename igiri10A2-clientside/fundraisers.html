@@ -8,7 +8,7 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous" />
-    <link href="global.css" rel="stylesheet" />
+<link href="global.css" rel="stylesheet" />
     <style>
         .fundraiser-container {
             display: flex;
@@ -16,6 +16,12 @@
         }
         .fundraiser-card {
             flex: 0 0 40%; 
+            box-shadow: 0 4px 10px rgba(0, 243, 122, 0.25); 
+            transition: 1s ease;
+        }
+    .fundraiser-card:hover {
+    box-shadow: 0 8px 20px rgba(26, 233, 78, 0.35); 
+    cursor: pointer;
         }
         .donation-list {
             flex: 0 0 55%; 
@@ -26,13 +32,17 @@
         .donation-list h2 {
             margin-top: 0;
         }
+
+        #title{
+            color: white;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(20, 129, 95);">
             <div class="container">
-                <a class="navbar-brand title" href="#">Crowdfunding</a>
+                <a id="title" class="navbar-brand title" href="/">Crowdfunding</a>
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
@@ -48,7 +58,7 @@
                             <a style="color: rgb(255, 255, 255); font-weight: bold;" class="nav-link title" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a style="color: rgb(255, 255, 255); " class="nav-link title" href="/about">About Us</a>
+                            <a  style="color: rgb(255, 255, 255); " class="nav-link title" href="/allFundraisers">All Fundraisers</a>
                         </li>
                     </ul>
                 </div>
@@ -60,9 +70,8 @@
         <div class="fundraiser-container">
             <div id="fundraiser-details" class="fundraiser-card"></div>
             <div class="donation-list">
-                <h2>Top Donations</h2>
+                <h2>Top Donations to Fundraiser</h2>
                 <div id="donation-list"></div>
-                <a href="#" id="see-more" class="text-primary">See More</a>
             </div>
         </div>
     </main>
@@ -75,7 +84,6 @@
             3: '/assets/bike-accident.avif',
             4: '/assets/homeshelter.jpg',
             5: '/assets/students.jpg',
-            6: '/assets/homeless-children.avif',
         };
 
         const path = window.location.pathname;
@@ -90,7 +98,7 @@
                     detailsDiv.innerHTML = `
                         <div class="container">
                             <div class="fundraiser-card card border-0">
-                                <img src="${imageUrl}" class="card-img-top" alt="${fundraiser.CAPTION}" style="max-height: 300px; object-fit: contain;">
+                                <img style = "border-radius : 10px;" src="${imageUrl}" class="card-img-top" alt="${fundraiser.CAPTION}" style="max-height: 300px; object-fit: contain;">
                                 <div class="card-body p-4">
                                     <h5 class="card-title mb-3 fw-bold">${fundraiser.CAPTION}</h5>
                                     <p class="card-text mb-2"><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>
@@ -117,7 +125,8 @@
                         .then(response => response.json())
                         .then(donations => {
                             const donationListDiv = document.getElementById('donation-list');
-                            donationListDiv.innerHTML = donations.slice(0, 5).map(donation =>
+                            donations.sort((a, b) => b.AMOUNT - a.AMOUNT);
+                            donationListDiv.innerHTML = donations.map(donation =>
 
                            { 
                             const date = new Date(donation.DATE);
@@ -129,6 +138,7 @@
                 month: '2-digit',
                 day: '2-digit'
             }) : 'Invalid date';
+
                             
                           return  `
                                 <div class="card mb-2">
@@ -140,25 +150,15 @@
                                 </div>
                             `}).join('');
 
-                            // Handle "See More" link
-                            document.getElementById('see-more').addEventListener('click', function(event) {
-                                event.preventDefault();
-                                donationListDiv.innerHTML = donations.map(donation => `
-                                    <div class="card mb-2">
-                                        <div class="card-body">
-                                            <p><strong>Giver:</strong> ${donation.GIVER}</p>
-                                            <p><strong>Amount:</strong> $${donation.AMOUNT}</p>
-                                        </div>
-                                    </div>
-                                `).join('');
-                                this.style.display = 'none'; // Hide the "See More" link
-                            });
                         });
                 })
                 .catch(error => console.error('Error:', error));
         } else {
             document.getElementById('fundraiser-details').innerHTML = '<p class="text-danger">Fundraiser not found.</p>';
         }
+
+        
+
     </script>
     
 </body>

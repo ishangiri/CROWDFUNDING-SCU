@@ -44,6 +44,10 @@
   width: 500px;
 }
 
+nav {
+  background-color: rgba(20, 129, 95, 0.9); /* Semi-transparent background */
+}
+
 html, body {
   height: 100%;
 }
@@ -57,6 +61,23 @@ main {
 footer {
   background-color: #c8dace; /* Optional background color */
   text-align: center;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(10px); /* Optional: adds a blur effect */
+}
+
+#search-form {
+  position: fixed;
+  width: 100%;
+  top: 55.5px;
+  z-index: 1000;
+  backdrop-filter: blur(10px); /* Optional: adds a blur effect */
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  padding: 10px 20px; /* Optional: some padding */
 }
 
 .fundraiser-card {
@@ -89,7 +110,7 @@ footer {
   justify-content: space-between;
 }
 .fundraiser-card {
-  flex: 0 0 40%; /* Adjust the width of the fundraiser card */
+  flex: 0 0 40%;
 }
 .donation-list {
   flex: 0 0 55%; 
@@ -99,4 +120,60 @@ footer {
 }
 .donation-list h2 {
   margin-top: 0;
+}
+
+.top-donations {
+  background-color: #f8f9fa;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  height: 100%;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+.content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+.sticky-sidebar {
+  position: sticky;
+  top: 20px;
+}
+.content-wrapper {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+.main-content, .sidebar {
+  padding: 2rem;
+}
+.main-content {
+  border-right: 1px solid #dee2e6;
+}
+.top-donations {
+  background-color: #f8f9fa;
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  height: 100%;
+  border: 1px solid #dee2e6;
+}
+.sticky-sidebar {
+  position: sticky;
+  top: 20px;
+}
+.list-group-item {
+  background-color: transparent;
+  border-left: none;
+  border-right: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.list-group-item:first-child {
+  border-top: none;
+}
+.list-group-item:last-child {
+  border-bottom: none;
+}
+.badge {
+  font-size: 0.875rem;
 }

@@ -23,8 +23,8 @@ app.get("/fundraisers/:id", (req, res) => {
   res.sendFile(path.join(__dirname, "fundraisers.html"));
 });
 
-app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname, "about.html"));
+app.get("/allFundraisers", (req, res) => {
+  res.sendFile(path.join(__dirname, "allFundraisers.html"));
 });
 
 app.get("/donation", (req, res) => {

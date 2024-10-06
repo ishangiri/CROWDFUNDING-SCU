@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const fundraiserElement = document.createElement('div');
             fundraiserElement.className = "col";
             fundraiserElement.innerHTML = `
-                <div id = "card" class="card  shadow-sm">
+                <div  id = "card" class="card  shadow-sm">
                     <img src="${imageUrl}" class="card-img-top" alt="${fundraiser.CAPTION}" />
                     <div class="card-body">
                         <h5 class="card-title">${fundraiser.CAPTION}</h5>
