@@ -1,11 +1,10 @@
 const categoryImages = {
-    1: "./assets/jessica.jpg",
-    2: "./assets/flood.jpeg",
-    3: "./assets/bike-accident.avif",
-    4: "./assets/homeshelter.jpg",
-    5: "./assets/students.jpg"
+    1: '/assets/medical.jpg',
+    2: '/assets/education.jpg',
+    3: '/assets/social.jpg',
+    4: '/assets/nature.jpg',
+    5: '/assets/war.webp',
 };
-
 
 const path = window.location.pathname;
 const id = path.split('/').pop();
@@ -122,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             fundraiserElement.className = "col";
             fundraiserElement.innerHTML = `
                 <div  id = "card" class="card  shadow-sm">
-                    <img src="${imageUrl}" class="card-img-top" alt="${fundraiser.CAPTION}" />
+                    <img src="${imageUrl}" class="card-img-top img-fluid" alt="${fundraiser.CAPTION}" />
                     <div class="card-body">
                         <h5 class="card-title">${fundraiser.CAPTION}</h5>
                         <p class="card-text para"><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>

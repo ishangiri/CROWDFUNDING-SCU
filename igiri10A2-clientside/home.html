@@ -89,15 +89,12 @@
 <script>
 
 const categoryImages = {
-            1: '/assets/jessica.jpg',
-            2: '/assets/flood.jpeg',
-            3: '/assets/bike-accident.avif',
-            4: '/assets/homeshelter.jpg',
-            5: '/assets/students.jpg',
-            6: '/assets/homeless-children.avif',
-        };
-
-
+    1: '/assets/medical.jpg',
+    2: '/assets/education.jpg',
+    3: '/assets/social.jpg',
+    4: '/assets/nature.jpg',
+    5: '/assets/war.webp',
+};
 document.addEventListener('DOMContentLoaded', function() {
             fetch('http://23975071.it.scu.edu.au/DataServ/api/donations')
                 .then(response => response.json())
