@@ -11,7 +11,10 @@
         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
           <th class="py-3 px-6 text-left">Organizer</th>
           <th class="py-3 px-6 text-left">Caption</th>
-          <th class="py-3 px-6 text-left">Actions</th>
+          <th class="py-3 px-6 text-left">Target Funding</th>
+          <th class="py-3 px-6 text-left">Status</th>
+          <th class="py-3 px-6 text-left">City</th>
+          <th class="py-3 px-6 text-left">Category</th>
         </tr>
       </thead>
       <tbody>
@@ -23,20 +26,20 @@
             {{ fundraiser.ORGANIZER }}
           </td>
           <td class="py-3 px-6 text-left">{{ fundraiser.CAPTION }}</td>
+          <td class="py-3 px-6 text-left">{{ fundraiser.TARGET_FUNDING }}</td>
           <td class="py-3 px-6 text-left">
-            <button
-              (click)="editFundraiser(fundraiser)"
-              class="text-blue-600 hover:text-blue-800 font-semibold"
+            <span
+              class="px-2 py-1 rounded-lg"
+              [ngClass]="{
+                'bg-green-100 text-green-700': fundraiser.ACTIVE === 1,
+                'bg-red-100 text-red-700': fundraiser.ACTIVE !== 1
+              }"
             >
-              Edit
-            </button>
-            <button
-              (click)="deleteFundraiser(fundraiser.id)"
-              class="text-red-600 hover:text-red-800 font-semibold ml-4"
-            >
-              Delete
-            </button>
+              {{ fundraiser.ACTIVE === 1 ? "Active" : "Unactive" }}
+            </span>
           </td>
+          <td class="py-3 px-6 text-left">{{ fundraiser.CITY }}</td>
+          <td class="py-3 px-6 text-left">{{ fundraiser.CATEGORY_ID }}</td>
         </tr>
       </tbody>
     </table>

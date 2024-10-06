@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'; // Importing RouterModule and Routes for defining application routes
 import { HomeComponent } from './pages/home/home.component'; // Importing HomeComponent for the home page
 import { AddComponent } from './pages/add/add.component'; // Importing AddComponent for adding new items
-import { EditComponent } from './pages/edit/edit.component'; // Importing EditComponent for editing existing items
+import { EditComponent } from './Modals/edit/edit.component'; // Importing EditComponent for editing existing items
 
 // Defining the application routes
 export const routes: Routes = [

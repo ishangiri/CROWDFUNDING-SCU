@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { TopbarComponent } from './global/topbar/topbar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AddComponent } from './pages/add/add.component';
-import { EditComponent } from './pages/edit/edit.component';
+import { EditComponent } from './Modals/edit/edit.component';
 import { FooterComponent } from './global/footer/footer.component';
 import { RouterModule } from '@angular/router'; // Importing RouterModule for navigation
 
