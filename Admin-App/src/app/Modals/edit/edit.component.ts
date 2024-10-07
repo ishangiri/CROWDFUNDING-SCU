@@ -80,7 +80,7 @@ export class EditComponent implements OnInit, OnChanges {
     this.isLoading = true;
     // Verifica que el ID del fundraiser sea el correcto
     this.http
-      .put(
+      .patch(
         `http://23975071.it.scu.edu.au/DataServ/api/fundraisers/${this.fundraiser.FUNDRAISER_ID}`,
         this.fundraiser
       )

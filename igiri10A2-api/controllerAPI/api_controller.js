@@ -278,7 +278,6 @@ router.post('/api/fundraisers/donate/:id', (req, res) => {
   });
   })
 
-  module.exports = router;
 
 
   //get the donations of one particular fundraiser
@@ -296,3 +295,6 @@ router.post('/api/fundraisers/donate/:id', (req, res) => {
       }
     })
   })
+
+
+  module.exports = router;
