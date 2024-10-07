@@ -11,6 +11,7 @@
         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
           <th class="py-3 px-6 text-left">Organizer</th>
           <th class="py-3 px-6 text-left">Caption</th>
+          <th class="py-3 px-6 text-left">Current Funding</th>
           <th class="py-3 px-6 text-left">Target Funding</th>
           <th class="py-3 px-6 text-left">Status</th>
           <th class="py-3 px-6 text-left">City</th>
@@ -26,6 +27,7 @@
             {{ fundraiser.ORGANIZER }}
           </td>
           <td class="py-3 px-6 text-left">{{ fundraiser.CAPTION }}</td>
+          <td class="py-3 px-6 text-left">{{ fundraiser.CURRENT_FUNDING }}</td>
           <td class="py-3 px-6 text-left">{{ fundraiser.TARGET_FUNDING }}</td>
           <td class="py-3 px-6 text-left">
             <span
@@ -35,7 +37,7 @@
                 'bg-red-100 text-red-700': fundraiser.ACTIVE !== 1
               }"
             >
-              {{ fundraiser.ACTIVE === 1 ? "Active" : "Unactive" }}
+              {{ fundraiser.ACTIVE === 1 ? "Active" : "Inactive" }}
             </span>
           </td>
           <td class="py-3 px-6 text-left">{{ fundraiser.CITY }}</td>

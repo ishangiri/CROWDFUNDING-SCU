@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit {
   // Update the fundraiser
   updateFundraiser() {
     this.http
-      .put(
-        `/api/fundraisers/${this.editingFundraiser.id}`,
+      .patch(
+        `http://23975071.it.scu.edu.au/DataServ/api/fundraisers/${this.editingFundraiser.id}`,
         this.editingFundraiser
       )
       .subscribe(
