@@ -87,7 +87,7 @@ export class EditComponent implements OnInit, OnChanges {
       !this.fundraiser.CAPTION ||
       !this.fundraiser.TARGET_FUNDING ||
       !this.fundraiser.CITY ||
-      this.fundraiser.ACTIVE === undefined || // Asegúrate de validar correctamente ACTIVE
+      this.fundraiser.ACTIVE === undefined ||
       !this.fundraiser.CATEGORY_ID
     ) {
       this.errorMessage = 'Please fill out all required fields!';

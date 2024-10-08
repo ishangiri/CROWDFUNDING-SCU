@@ -36,8 +36,6 @@ export class AddComponent implements OnInit {
     this.getCategories(); // Fetch the list of categories
   }
 
-  
-
   // Fetch fundraisers from the API
   getFundraisers() {
     this.isLoading = true;
