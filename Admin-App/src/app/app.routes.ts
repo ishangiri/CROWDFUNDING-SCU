@@ -7,8 +7,10 @@ import { EditComponent } from './Modals/edit/edit.component'; // Importing EditC
 
 // Defining the application routes
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // Default route: navigates to HomeComponent when the app loads
-  { path: 'add', component: AddComponent }, // Route to AddComponent for adding new entries
+  { path: '', redirectTo: 'AdminSide/home', pathMatch: 'full' },
+
+  { path: 'AdminSide/home', component: HomeComponent }, // Default route: navigates to HomeComponent when the app loads
+  { path: 'AdminSide/add', component: AddComponent }, // Route to AddComponent for adding new entries
   { path: 'edit/:id', component: EditComponent }, // Route to EditComponent for editing entries based on the provided ID parameter
 ];
 
