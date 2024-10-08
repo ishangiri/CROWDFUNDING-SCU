@@ -31,21 +31,6 @@
 
     <!-- Form for editing fundraiser details -->
     <form (ngSubmit)="updateFundraiser()" class="space-y-4">
-      <!-- Fundraiser ID Field (Hidden in the final version, currently visible for testing purposes) -->
-      <div>
-        <label for="fundraiser" class="block text-sm font-medium text-gray-700"
-          >Fundraiser ID</label
-        >
-        <input
-          type="text"
-          [(ngModel)]="fundraiser.FUNDRAISER_ID"
-          name="fundraiser"
-          id="fundraiser"
-          required
-          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-500"
-        />
-      </div>
-
       <!-- Organizer Field -->
       <div>
         <label for="organizer" class="block text-sm font-medium text-gray-700"
@@ -93,6 +78,23 @@
         />
       </div>
 
+      <!-- Current Funding Field -->
+      <div>
+        <label
+          for="current_funding"
+          class="block text-sm font-medium text-gray-700"
+          >Current Funding</label
+        >
+        <input
+          type="number"
+          [(ngModel)]="fundraiser.CURRENT_FUNDING"
+          name="current_funding"
+          id="current_funding"
+          required
+          class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+        />
+      </div>
+
       <!-- Status Dropdown (Active/Inactive) -->
       <div>
         <label for="active" class="block text-sm font-medium text-gray-700"
@@ -135,6 +137,7 @@
           id="category_id"
           class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-500"
         >
+          <option value="" disabled selected>Select a category</option>
           <!-- Loop through categories and populate the dropdown -->
           <option
             *ngFor="let category of categories"
@@ -149,8 +152,9 @@
       <button
         type="submit"
         class="w-full bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700 transition duration-300"
+        [disabled]="isLoading"
       >
-        Save Changes
+        {{ isLoading ? "Saving..." : "Save Changes" }}
       </button>
     </form>
   </div>
